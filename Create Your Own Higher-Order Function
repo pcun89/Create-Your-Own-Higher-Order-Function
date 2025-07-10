@@ -1,0 +1,46 @@
+from functools import reduce
+
+# Custom higher-order function that takes a function as argument
+def custom_map(func, iterable):
+    result = []
+    for item in iterable:
+        result.append(func(item))
+    return result
+
+# Higher-order function that returns another function
+def create_multiplier(multiplier):
+    def multiply_by(n):
+        return n * multiplier
+    return multiply_by
+
+# Example data
+numbers = [1, 2, 3, 4, 5]
+names = ["Alice", "Bob", "Anna", "David"]
+
+# Built-in map
+squares = list(map(lambda x: x ** 2, numbers))
+
+# Built-in filter
+a_names = list(filter(lambda name: name.startswith("A"), names))
+
+# Built-in reduce
+total_sum = reduce(lambda x, y: x + y, numbers)
+
+# Custom map
+doubled = custom_map(lambda x: x * 2, numbers)
+
+# Function returned from a HOF
+triple = create_multiplier(3)
+tripled_values = list(map(triple, numbers))
+
+# Output results
+def main():
+    print("Original:", numbers)
+    print("Squared:", squares)
+    print("Names starting with A:", a_names)
+    print("Total Sum:", total_sum)
+    print("Doubled (custom_map):", doubled)
+    print("Tripled (create_multiplier):", tripled_values)
+
+if __name__ == "__main__":
+    main()
