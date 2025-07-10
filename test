@@ -1,0 +1,51 @@
+import unittest
+from functools import reduce
+
+# Functions from higher_order_functions.py
+def custom_map(func, iterable):
+    result = []
+    for item in iterable:
+        result.append(func(item))
+    return result
+
+def create_multiplier(multiplier):
+    def multiply_by(n):
+        return n * multiplier
+    return multiply_by
+
+class TestHigherOrderFunctions(unittest.TestCase):
+
+    def test_custom_map_with_square(self):
+        data = [1, 2, 3]
+        expected = [1, 4, 9]
+        result = custom_map(lambda x: x**2, data)
+        self.assertEqual(result, expected)
+
+    def test_custom_map_with_string_uppercase(self):
+        data = ['a', 'b']
+        expected = ['A', 'B']
+        result = custom_map(lambda s: s.upper(), data)
+        self.assertEqual(result, expected)
+
+    def test_create_multiplier(self):
+        triple = create_multiplier(3)
+        self.assertEqual(triple(2), 6)
+        self.assertEqual(triple(5), 15)
+
+    def test_builtin_map(self):
+        data = [1, 2, 3]
+        result = list(map(lambda x: x + 1, data))
+        self.assertEqual(result, [2, 3, 4])
+
+    def test_builtin_filter(self):
+        names = ["Anna", "Bob", "Alice"]
+        result = list(filter(lambda name: name.startswith("A"), names))
+        self.assertEqual(result, ["Anna", "Alice"])
+
+    def test_builtin_reduce(self):
+        numbers = [1, 2, 3, 4]
+        result = reduce(lambda acc, val: acc + val, numbers)
+        self.assertEqual(result, 10)
+
+if __name__ == '__main__':
+    unittest.main()
